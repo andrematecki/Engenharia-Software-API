@@ -1,0 +1,109 @@
+---
+swagger: "2.0"
+info:
+  description: "API para realizar pesquisas no Google através do serviço 'Google Custom Search'."
+  version: "1.0"
+  title: "Engenharia-Software-API"
+  contact:
+    email: andre@matecki.com.br
+host: "k0g6u1dj91.execute-api.us-east-1.amazonaws.com"
+basePath: "/v1"
+schemes:
+- "https"
+tags: 
+- name: oauth
+  description: Autenticar usuários cadastrados
+- name: search
+  description: Pesquisas Google
+
+paths:
+  /oauth/token:
+    post:
+      tags: 
+      - oauth
+      summary: Gera token de acesso
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      - application/text
+      parameters:
+      - in: body
+        name: User
+        description: Usuário a se autenticar
+        required: true
+        schema:
+          $ref: '#/definitions/User'
+      responses: 
+        200:
+          description: Usuário autenticado
+          schema:
+            $ref: '#/definitions/Token'
+        400:
+          description: Usuário não configurado corretamente
+          
+
+  /search:
+    get:
+      tags:
+      - search
+      summary: "Realiza buscas no Google"
+      produces:
+        - application/json
+      parameters:
+      - in: query
+        name: q
+        description: Termo que se deseja pesquisar
+        type: string
+      responses: 
+        200:
+          description: Lista de resultados da pesquisa
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Search'
+        400:
+          description: Parametro não configurado corretamente
+        401: 
+          description: Usuário não autenticado
+          
+      security:
+      - Cognito-Authorizer: []
+      
+definitions:
+  Token:
+    type: object
+    properties:
+      Token:
+        type: string
+  User:
+    type: object
+    required: 
+      - Username
+      - Password
+    properties:
+      Username:
+        type: string
+        description: Login do usuário
+        example: andrematecki
+      Password:
+        type: string
+  Search:
+    type: object
+    properties:
+      Title:
+        type: string
+        description: Título do resultado da pesquisa
+      Snippet:
+        type: string
+        description: Resumo do resultado da pesquisa
+      Link:
+        type: string
+        description: Link do resultado da pesquisa
+        
+securityDefinitions:
+  Cognito-Authorizer:
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+    x-amazon-apigateway-authtype: "cognito_user_pools"

@@ -1,0 +1,106 @@
+{
+	"AWSTemplateFormatVersion" : "2010-09-09",
+	"Transform" : "AWS::Serverless-2016-10-31",
+	"Description" : "An AWS Serverless Application.",
+
+	"Resources" : {
+
+		"API" : {
+			"Type": "AWS::Serverless::Api",
+			"Properties" : {
+				"Name" : "Engenharia-Software-API",
+				"StageName" : "v1",
+				"Auth" : {
+					"Authorizers" : {
+						"Cognito-Authorizer" : {
+							"UserPoolArn" : "arn:aws:cognito-idp:us-east-1:660825333955:userpool/us-east-1_pq1eWyhy4",
+							"Identity" : {
+								"Header" : "Authorization"
+							}
+						}
+					}
+				}
+			}
+		},
+
+		"TestFunction" : {
+			"Type" : "AWS::Serverless::Function",
+			"Properties": {
+				"Handler": "Engenharia-Software::Engenharia_Software.Presentation.Functions::Test",
+				"Runtime": "dotnetcore2.1",
+				"CodeUri": "",
+				"MemorySize": 256,
+				"Timeout": 30,
+				"Role": null,
+				"Policies": [ "AWSLambdaBasicExecutionRole" ],
+				"Events": {
+					"PutResource": {
+						"Type": "Api",
+						"Properties": {
+							"Path": "/",
+							"Method": "GET",
+							"RestApiId" : { "Ref" : "API" },
+							"Auth" : {
+								"Authorizer" : "Cognito-Authorizer"
+							}
+						}
+					}
+				}
+			}
+		},
+
+		"GenerateOauthTokenFunction" : {
+			"Type" : "AWS::Serverless::Function",
+			"Properties": {
+				"Handler": "Engenharia-Software::Engenharia_Software.Presentation.Functions::GenerateOauthToken",
+				"Runtime": "dotnetcore2.1",
+				"CodeUri": "",
+				"MemorySize": 256,
+				"Timeout": 30,
+				"Role": null,
+				"Policies": [ "AWSLambdaBasicExecutionRole" ],
+				"Events": {
+					"PutResource": {
+						"Type": "Api",
+						"Properties": {
+							"Path": "/oauth/token",
+							"Method": "POST",
+							"RestApiId" : { "Ref" : "API" }
+						}
+					}
+				}
+			}
+		},
+
+		"SearchFunction" : {
+			"Type" : "AWS::Serverless::Function",
+			"Properties": {
+				"Handler": "Engenharia-Software::Engenharia_Software.Presentation.Functions::Search",
+				"Runtime": "dotnetcore2.1",
+				"CodeUri": "",
+				"MemorySize": 256,
+				"Timeout": 30,
+				"Role": null,
+				"Policies": [ "AWSLambdaBasicExecutionRole" ],
+				"Events": {
+					"PutResource": {
+						"Type": "Api",
+						"Properties": {
+							"Path": "/search",
+							"Method": "GET",
+							"RestApiId" : { "Ref" : "API" },
+							"Auth" : {
+								"Authorizer" : "Cognito-Authorizer"
+							}
+						}
+					}
+				}
+			}
+		}
+
+	},
+
+	"Outputs" : {
+		
+	}
+}
