@@ -23,3 +23,7 @@ A aplicação foi modelada com base em DDD (Domain-Driven Design). As principais e
  `CrossCutting` Estrutura que é *cross* entre todas as outras da aplicação.
  
  `Domain` Contém toda lógica de negócios da aplicação. Foram usadas interfaces para definição de ações do negócio e a responsabilidade de implementação fica nas outras camadas.
+
+ ## Documentação da API
+ 
+https://app.swaggerhub.com/apis-docs/andrematecki/engenharia-software_api/1.0
