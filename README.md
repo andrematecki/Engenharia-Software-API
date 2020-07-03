@@ -1,29 +1,31 @@
 # Engenharia de Software (API)
 
-Este projeto é baseado em serviços AWS para disponibilização de recursos RestFul através de uma API Gateway.
+Este projeto Ã© baseado em serviÃ§os AWS para disponibilizaÃ§Ã£o de recursos RestFul atravÃ©s de uma API Gateway.
 
-* serverless.template - template para criação de recursos na AWS via *CloudFormation*
-* Function.cs - main classe com os "entry points" para as funções Lambdas (serveless) 
-* appsettings.json - arquivo de configurações. Existe um arquivo exemplo na aplicação "appsettings.change.json". Renomear o arquivo e alteração as configurações.
-* swagger-v1.yaml - arquivo com a documentação Swagger da API
+* serverless.template - template para criaÃ§Ã£o de recursos na AWS via *CloudFormation*
+* Function.cs - main classe com os "entry points" para as funÃ§Ãµes Lambdas (serveless) 
+* appsettings.json - arquivo de configuraÃ§Ãµes. Existe um arquivo exemplo na aplicaÃ§Ã£o "appsettings.change.json". Renomear o arquivo e alteraÃ§Ã£o as configuraÃ§Ãµes.
+* swagger-v1.yaml - arquivo com a documentaÃ§Ã£o Swagger da API
 
-## Design da Aplicação
+## Design da AplicaÃ§Ã£o
 
-A aplicação foi modelada com base em DDD (Domain-Driven Design). As principais estruuras são comentadas a seguir:
+A aplicaÃ§Ã£o foi modelada com base em DDD (Domain-Driven Design). As principais estruuras sÃ£o comentadas a seguir:
 
-`Presentation` Interface com o usuário. Foi utilizado Lambda para expor as funcionalidades da aplicação.
+`Presentation` Interface com o usuÃ¡rio. Foi utilizado Lambda para expor as funcionalidades da aplicaÃ§Ã£o.
 
- **ResquestModel e ResponseModel ** contém classes de IO de  informações da aplicação para não expor o modelo de dados do dominio.
+ **ResquestModel e ResponseModel** contÃ©m classes de IO de  informaÃ§Ãµes da aplicaÃ§Ã£o para nÃ£o expor o modelo de dados do dominio.
 
-`Service` Serviços que atendem ao negócio. Nessa aplicação foi abstraida a estrutura de *Serviços de Aplicação.*  
+`Service` ServiÃ§os que atendem ao negÃ³cio. Nessa aplicaÃ§Ã£o foi abstraida a estrutura de *ServiÃ§os de AplicaÃ§Ã£o.*  
 *Pode estar abaixo da estrtura do domain.*
 
-`Infra` Processos que suportam a aplicação
+`Infra` Processos que suportam a aplicaÃ§Ã£o
  
- `CrossCutting` Estrutura que é *cross* entre todas as outras da aplicação.
+ `CrossCutting` Estrutura que Ã© *cross* entre todas as outras da aplicaÃ§Ã£o.
  
- `Domain` Contém toda lógica de negócios da aplicação. Foram usadas interfaces para definição de ações do negócio e a responsabilidade de implementação fica nas outras camadas.
+ `Domain` ContÃ©m toda lÃ³gica de negÃ³cios da aplicaÃ§Ã£o. Foram usadas interfaces para definiÃ§Ã£o de aÃ§Ãµes do negÃ³cio e a responsabilidade de implementaÃ§Ã£o fica nas outras camadas.
 
- ## Documentação da API
- 
+ ## DocumentaÃ§Ã£o da API
+
 https://app.swaggerhub.com/apis-docs/andrematecki/engenharia-software_api/1.0
+
+ ![](https://raw.githubusercontent.com/andrematecki/Engenharia-Software-API/master/architecture-diagram.jpg?token=ABYP2DQ4ZSOP7QARZILZDYS672YZS)
